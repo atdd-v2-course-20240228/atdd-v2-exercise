@@ -34,24 +34,24 @@ public class TestSteps {
         getWebDriver().quit();
     }
 
-    @假如("存在用户名为\"joseph\"和密码为\"{int}\"的用户")
-    public void 存在用户名为_joseph_和密码为_的用户(Integer int1) {
-    }
-
-    @当("通过API以用户名为\"joseph\"和密码为\"{int}\"登录时")
-    public void 通过api以用户名为_joseph_和密码为_登录时(Integer int1) {
-    }
-
     @那么("打印Token")
     public void 打印_token() {
     }
 
-    @当("在百度搜索关键字\"cucumber\"")
-    public void 在百度搜索关键字_cucumber() {
-    }
-
     @那么("打印百度为您找到的相关结果数")
     public void 打印百度为您找到的相关结果数() {
+    }
+
+    @假如("存在用户名为{string}和密码为{string}的用户")
+    public void 存在用户名为和密码为的用户(String arg0, String arg1) {
+    }
+
+    @当("通过API以用户名为{string}和密码为{string}登录时")
+    public void 通过api以用户名为和密码为登录时(String arg0, String arg1) {
+    }
+
+    @当("在百度搜索关键字{string}")
+    public void 在百度搜索关键字(String arg0) {
     }
 
     private WebDriver getWebDriver() {
