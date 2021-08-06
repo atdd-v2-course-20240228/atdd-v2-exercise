@@ -1,13 +1,18 @@
 package com.odde.atddv2;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.odde.atddv2.entity.User;
+import com.odde.atddv2.repo.UserRepo;
 import io.cucumber.java.After;
 import io.cucumber.java.zh_cn.假如;
 import io.cucumber.java.zh_cn.当;
 import io.cucumber.java.zh_cn.那么;
 import lombok.SneakyThrows;
+import okhttp3.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
 
@@ -15,7 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.By.xpath;
 
 public class TestSteps {
+    @Autowired
+    UserRepo userRepo;
     private WebDriver webDriver = null;
+    private Response response;
 
     @SneakyThrows
     public WebDriver createWebDriver() {
@@ -36,6 +44,7 @@ public class TestSteps {
 
     @那么("打印Token")
     public void 打印_token() {
+        System.out.println("response.header(\"token\") = " + response.header("token"));
     }
 
     @那么("打印百度为您找到的相关结果数")
@@ -43,11 +52,19 @@ public class TestSteps {
     }
 
     @假如("存在用户名为{string}和密码为{string}的用户")
-    public void 存在用户名为和密码为的用户(String arg0, String arg1) {
+    public void 存在用户名为和密码为的用户(String userName, String password) {
+        userRepo.deleteAll();
+        userRepo.save(new User().setUserName(userName).setPassword(password));
     }
 
+    @SneakyThrows
     @当("通过API以用户名为{string}和密码为{string}登录时")
-    public void 通过api以用户名为和密码为登录时(String arg0, String arg1) {
+    public void 通过api以用户名为和密码为登录时(String userName, String password) {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        ObjectMapper objectMapper = new ObjectMapper();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), objectMapper.writeValueAsString(new User().setUserName(userName).setPassword(password)));
+        Request request = new Request.Builder().url("http://localhost:10081/users/login").post(requestBody).build();
+        response = okHttpClient.newCall(request).execute();
     }
 
     @当("在百度搜索关键字{string}")
