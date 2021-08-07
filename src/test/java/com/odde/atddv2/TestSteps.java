@@ -2,43 +2,28 @@ package com.odde.atddv2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odde.atddv2.entity.User;
-import io.cucumber.java.After;
 import io.cucumber.java.zh_cn.当;
 import io.cucumber.java.zh_cn.那么;
 import lombok.SneakyThrows;
 import okhttp3.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.By.xpath;
 
 public class TestSteps {
-    private WebDriver webDriver = null;
+    @Autowired
+    Browser browser;
     private Response response;
-
-    @SneakyThrows
-    public WebDriver createWebDriver() {
-        return new RemoteWebDriver(new URL("http://web-driver.tool.net:4444"), DesiredCapabilities.chrome());
-    }
 
     @当("测试环境")
     public void 测试环境() {
         getWebDriver().get("http://host.docker.internal:10081/");
         assertThat(getWebDriver().findElements(xpath("//*[text()='登录']"))).isNotEmpty();
-    }
-
-    @After
-    public void quitWebDriver() {
-        if (webDriver != null) {
-            webDriver.quit();
-            webDriver = null;
-        }
     }
 
     @那么("打印Token")
@@ -73,8 +58,6 @@ public class TestSteps {
     }
 
     private WebDriver getWebDriver() {
-        if (webDriver == null)
-            webDriver = createWebDriver();
-        return webDriver;
+        return browser.getWebDriver();
     }
 }

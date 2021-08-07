@@ -20,16 +20,11 @@ public class Browser {
 
     private WebDriver webDriver = null;
 
-    @SneakyThrows
-    private WebDriver createWebDriver() {
-        return new RemoteWebDriver(new URL("http://web-driver.tool.net:4444"), DesiredCapabilities.chrome());
-    }
-
     public void launchByUrl(String path) {
         getWebDriver().get("http://host.docker.internal:10081" + path);
     }
 
-    private WebDriver getWebDriver() {
+    public WebDriver getWebDriver() {
         if (webDriver == null)
             webDriver = createWebDriver();
         return webDriver;
@@ -57,11 +52,16 @@ public class Browser {
     }
 
     @PreDestroy
-    public void close() {
+    public void quit() {
         if (webDriver != null) {
-            webDriver.close();
+            webDriver.quit();
             webDriver = null;
         }
+    }
+
+    @SneakyThrows
+    private WebDriver createWebDriver() {
+        return new RemoteWebDriver(new URL("http://web-driver.tool.net:4444"), DesiredCapabilities.chrome());
     }
 
     private WebElement waitElement(String xpathExpression) {
