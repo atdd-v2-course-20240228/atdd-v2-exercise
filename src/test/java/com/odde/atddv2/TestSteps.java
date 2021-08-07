@@ -3,6 +3,7 @@ package com.odde.atddv2;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odde.atddv2.entity.User;
 import com.odde.atddv2.repo.UserRepo;
+import io.cucumber.java.After;
 import io.cucumber.java.zh_cn.假如;
 import io.cucumber.java.zh_cn.当;
 import io.cucumber.java.zh_cn.那么;
@@ -37,7 +38,14 @@ public class TestSteps {
     public void 测试环境() {
         getWebDriver().get("http://host.docker.internal:10081/");
         assertThat(getWebDriver().findElements(xpath("//*[text()='登录']"))).isNotEmpty();
-        getWebDriver().quit();
+    }
+
+    @After
+    public void quitWebDriver() {
+        if (webDriver != null) {
+            webDriver.quit();
+            webDriver = null;
+        }
     }
 
     @那么("打印Token")
@@ -51,7 +59,6 @@ public class TestSteps {
         TimeUnit.SECONDS.sleep(2);
         String text = getWebDriver().findElement(xpath("//*[@id='container']/div[2]/div/div[2]/span")).getText();
         System.out.println("text = " + text);
-        getWebDriver().quit();
     }
 
     @假如("存在用户名为{string}和密码为{string}的用户")
@@ -89,16 +96,14 @@ public class TestSteps {
     @那么("{string}登录成功")
     public void 登录成功(String userName) {
         await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + ("Welcome " + userName) + "']"))).isNotEmpty());
-        getWebDriver().quit();
     }
 
     @那么("登录失败的错误信息是{string}")
     public void 登录失败的错误信息是(String message) {
         await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + message + "']"))).isNotEmpty());
-        getWebDriver().quit();
     }
 
-    private WebDriver getWebDriver() {
+    public WebDriver getWebDriver() {
         if (webDriver == null)
             webDriver = createWebDriver();
         return webDriver;
