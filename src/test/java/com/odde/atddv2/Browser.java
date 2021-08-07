@@ -47,6 +47,15 @@ public class Browser {
         await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + text + "']"))).isNotEmpty());
     }
 
+    public void selectTextByPlaceholder(String placeholder, String text) {
+        waitElement(String.format("//*[normalize-space(@placeholder)='%s']", placeholder)).click();
+        clickByText(text);
+    }
+
+    public void shouldNotHaveText(String text) {
+        await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + text + "']"))).isEmpty());
+    }
+
     @PreDestroy
     public void close() {
         if (webDriver != null) {
