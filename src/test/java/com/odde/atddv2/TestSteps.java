@@ -16,9 +16,11 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.openqa.selenium.By.xpath;
 
 public class TestSteps {
@@ -53,7 +55,7 @@ public class TestSteps {
     @那么("打印百度为您找到的相关结果数")
     public void 打印百度为您找到的相关结果数() {
         TimeUnit.SECONDS.sleep(2);
-        String text = webDriver.findElement(xpath("//*[@id='container']/div[2]/div/div[2]/span")).getText();
+        String text = getWebDriver().findElement(xpath("//*[@id='container']/div[2]/div/div[2]/span")).getText();
         System.out.println("text = " + text);
     }
 
@@ -77,8 +79,26 @@ public class TestSteps {
     @当("在百度搜索关键字{string}")
     public void 在百度搜索关键字(String keyword) {
         getWebDriver().get("http://www.baidu.com");
-        webDriver.findElement(By.xpath("//*[@id='kw']")).sendKeys(keyword);
-        webDriver.findElement(By.xpath("//*[@id='su']")).click();
+        getWebDriver().findElement(By.xpath("//*[@id='kw']")).sendKeys(keyword);
+        getWebDriver().findElement(By.xpath("//*[@id='su']")).click();
+    }
+
+    @当("以用户名为{string}和密码为{string}登录时")
+    public void 以用户名为和密码为登录时(String userName, String password) {
+        getWebDriver().get("http://host.docker.internal:10081");
+        await().until(() -> getWebDriver().findElement(xpath("//*[@id=\"app\"]/div/form/div[2]/div/div/input")), Objects::nonNull).sendKeys(userName);
+        await().until(() -> getWebDriver().findElement(xpath("//*[@id=\"app\"]/div/form/div[3]/div/div/input")), Objects::nonNull).sendKeys(password);
+        await().until(() -> getWebDriver().findElement(xpath("//*[@id=\"app\"]/div/form/button/span")), Objects::nonNull).click();
+    }
+
+    @那么("{string}登录成功")
+    public void 登录成功(String userName) {
+        await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + ("Welcome " + userName) + "']"))).isNotEmpty());
+    }
+
+    @那么("登录失败的错误信息是{string}")
+    public void 登录失败的错误信息是(String message) {
+        await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + message + "']"))).isNotEmpty());
     }
 
     private WebDriver getWebDriver() {
