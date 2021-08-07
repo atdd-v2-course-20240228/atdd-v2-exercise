@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -72,9 +73,10 @@ public class TestSteps {
         getWebDriver().findElement(By.xpath("//*[@id='su']")).click();
     }
 
+    @Autowired
+    private Browser browser;
+
     private WebDriver getWebDriver() {
-        if (webDriver == null)
-            webDriver = createWebDriver();
-        return webDriver;
+        return browser.getWebDriver();
     }
 }

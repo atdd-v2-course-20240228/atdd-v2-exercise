@@ -29,7 +29,7 @@ public class Browser {
         getWebDriver().get("http://host.docker.internal:10081" + path);
     }
 
-    private WebDriver getWebDriver() {
+    public WebDriver getWebDriver() {
         if (webDriver == null)
             webDriver = createWebDriver();
         return webDriver;
@@ -50,7 +50,7 @@ public class Browser {
     @PreDestroy
     public void close() {
         if (webDriver != null) {
-            webDriver.close();
+            webDriver.quit();
             webDriver = null;
         }
     }
