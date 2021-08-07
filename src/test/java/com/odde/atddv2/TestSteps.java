@@ -34,16 +34,18 @@ public class TestSteps {
         return new RemoteWebDriver(new URL("http://web-driver.tool.net:4444"), DesiredCapabilities.chrome());
     }
 
-    @After
-    public void closeBrowser() {
-        getWebDriver().quit();
-    }
-
     @当("测试环境")
     public void 测试环境() {
         getWebDriver().get("http://host.docker.internal:10081/");
         assertThat(getWebDriver().findElements(xpath("//*[text()='登录']"))).isNotEmpty();
-        getWebDriver().quit();
+    }
+
+    @After
+    public void quitWebDriver() {
+        if (webDriver != null) {
+            webDriver.quit();
+            webDriver = null;
+        }
     }
 
     @那么("打印Token")
@@ -101,7 +103,7 @@ public class TestSteps {
         await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + message + "']"))).isNotEmpty());
     }
 
-    private WebDriver getWebDriver() {
+    public WebDriver getWebDriver() {
         if (webDriver == null)
             webDriver = createWebDriver();
         return webDriver;
