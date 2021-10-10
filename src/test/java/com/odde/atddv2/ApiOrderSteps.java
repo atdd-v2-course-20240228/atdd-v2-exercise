@@ -9,6 +9,7 @@ import io.cucumber.java.zh_cn.并且;
 import io.cucumber.java.zh_cn.当;
 import io.cucumber.java.zh_cn.那么;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
@@ -19,10 +20,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ApiOrderSteps {
 
     @Autowired
+    MockServer mockServer;
+    @Autowired
     private OrderRepo orderRepo;
-
     @Autowired
     private Api api;
+    @Value("${binstd-endpoint.key}")
+    private String binstdAppKey;
 
     @当("API查询订单时")
     public void api查询订单时() {
@@ -61,4 +65,12 @@ public class ApiOrderSteps {
                 .hasFieldOrPropertyWithValue("deliverNo", deliverNo)
                 .hasFieldOrPropertyWithValue("status", delivering);
     }
+
+    @并且("存在快递单{string}的物流信息如下")
+    public void 存在快递单的物流信息如下(String deliverNo, String json) {
+        mockServer.getJson("/express/query", (request) -> request.withQueryStringParameter("appkey", binstdAppKey)
+                .withQueryStringParameter("type", "auto")
+                .withQueryStringParameter("number", deliverNo), json);
+    }
+
 }
