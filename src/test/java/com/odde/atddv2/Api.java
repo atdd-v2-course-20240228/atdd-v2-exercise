@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Api {
 
     private final OkHttpClient okHttpClient = new OkHttpClient();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private String response, token;
     @Autowired
     private UserRepo userRepo;
@@ -39,6 +40,17 @@ public class Api {
                 .header("token", token)
                 .get().build();
 
+        response = okHttpClient.newCall(request).execute().body().string();
+    }
+
+    @SneakyThrows
+    public void post(String path, Object body) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), objectMapper.writeValueAsString(body));
+        Request request = new Request.Builder()
+                .url(String.format("http://localhost:10081/api/%s", path))
+                .header("Accept", "application/json")
+                .header("token", token)
+                .post(requestBody).build();
         response = okHttpClient.newCall(request).execute().body().string();
     }
 

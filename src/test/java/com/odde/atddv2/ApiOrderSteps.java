@@ -11,6 +11,10 @@ import io.cucumber.java.zh_cn.那么;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
+
+import static com.odde.atddv2.entity.Order.OrderStatus.delivering;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiOrderSteps {
 
@@ -37,5 +41,24 @@ public class ApiOrderSteps {
         Order order = orderRepo.findByCode(orderCode);
         table.asMaps().forEach(map -> order.getLines().add(objectMapper.convertValue(map, OrderLine.class).setOrder(order)));
         orderRepo.save(order);
+    }
+
+    @当("API查询订单{string}详情时")
+    public void api查询订单详情时(String code) {
+        api.get(String.format("orders/%s", code));
+    }
+
+    @当("通过API发货订单{string}，快递单号为{string}")
+    public void 通过api发货订单快递单号为(String order, String deliverNo) {
+        api.post(String.format("orders/%s/deliver", order), new HashMap<String, String>() {{
+            put("deliverNo", deliverNo);
+        }});
+    }
+
+    @那么("订单{string}已发货，快递单号为{string}")
+    public void 订单已发货快递单号为(String order, String deliverNo) {
+        assertThat(orderRepo.findByCode(order))
+                .hasFieldOrPropertyWithValue("deliverNo", deliverNo)
+                .hasFieldOrPropertyWithValue("status", delivering);
     }
 }
