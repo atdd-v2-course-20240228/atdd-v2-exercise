@@ -1,69 +1,40 @@
 package com.odde.atddv2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.odde.atddv2.entity.Order;
-import com.odde.atddv2.entity.OrderLine;
-import com.odde.atddv2.repo.OrderRepo;
-import io.cucumber.datatable.DataTable;
+import com.github.leeonky.cucumber.restful.RestfulStep;
+import com.odde.atddv2.entity.User;
+import com.odde.atddv2.repo.UserRepo;
+import io.cucumber.docstring.DocString;
+import io.cucumber.java.Before;
 import io.cucumber.java.zh_cn.并且;
-import io.cucumber.java.zh_cn.当;
-import io.cucumber.java.zh_cn.那么;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
-import javax.transaction.Transactional;
-import java.util.HashMap;
-
-import static com.odde.atddv2.entity.Order.OrderStatus.delivering;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiOrderSteps {
 
     @Autowired
     MockServer mockServer;
-    @Autowired
-    private OrderRepo orderRepo;
-    @Autowired
-    private Api api;
+
     @Value("${binstd-endpoint.key}")
     private String binstdAppKey;
 
-    @当("API查询订单时")
-    public void api查询订单时() {
-        api.get("orders");
-    }
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private RestfulStep restfulStep;
 
-    @那么("返回如下订单")
-    public void 返回如下订单(String json) {
-        api.responseShouldMatchJson(json);
-    }
-
-    @并且("存在订单{string}的订单项:")
-    @Transactional
-    public void 存在订单的订单项(String orderCode, DataTable table) {
+    @SneakyThrows
+    @Before("@api-login")
+    public void apiLogin() {
+        User defaultUser = new User().setUserName("j").setPassword("j");
+        userRepo.save(defaultUser);
         ObjectMapper objectMapper = new ObjectMapper();
-        Order order = orderRepo.findByCode(orderCode);
-        table.asMaps().forEach(map -> order.getLines().add(objectMapper.convertValue(map, OrderLine.class).setOrder(order)));
-        orderRepo.save(order);
-    }
-
-    @当("API查询订单{string}详情时")
-    public void api查询订单详情时(String code) {
-        api.get(String.format("orders/%s", code));
-    }
-
-    @当("通过API发货订单{string}，快递单号为{string}")
-    public void 通过api发货订单快递单号为(String order, String deliverNo) {
-        api.post(String.format("orders/%s/deliver", order), new HashMap<String, String>() {{
-            put("deliverNo", deliverNo);
-        }});
-    }
-
-    @那么("订单{string}已发货，快递单号为{string}")
-    public void 订单已发货快递单号为(String order, String deliverNo) {
-        assertThat(orderRepo.findByCode(order))
-                .hasFieldOrPropertyWithValue("deliverNo", deliverNo)
-                .hasFieldOrPropertyWithValue("status", delivering);
+        restfulStep.setBaseUrl("http://localhost:10081");
+        restfulStep.post("/users/login", DocString.create(objectMapper.writeValueAsString(defaultUser)));
+        String token = restfulStep.response().headers().getSingle("token");
+        restfulStep.header("token", token);
+        restfulStep.setBaseUrl("http://localhost:10081/api");
     }
 
     @并且("存在快递单{string}的物流信息如下")

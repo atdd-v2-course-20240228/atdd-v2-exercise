@@ -10,14 +10,13 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request.Builder;
 import okhttp3.RequestBody;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +34,10 @@ public class RestfulStep {
 
     public RestfulStep(OkHttpClient httpClient) {
         this.httpClient = httpClient;
+    }
+
+    public Response response() {
+        return response;
     }
 
     public void setBaseUrl(String baseUrl) {
@@ -188,6 +191,83 @@ public class RestfulStep {
             String header = raw.header("Content-Disposition");
             Matcher matcher = Pattern.compile(".*filename=\"(.*)\".*").matcher(header);
             return matcher.matches() ? matcher.group(1) : header;
+        }
+
+        public Headers headers() {
+            return new Headers();
+        }
+
+        public class Headers implements Map<String, Object> {
+
+            private final Map<String, List<String>> rawHeaders = raw.headers().toMultimap();
+
+            @Override
+            public int size() {
+                return rawHeaders.size();
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return rawHeaders.size() == 0;
+            }
+
+            @Override
+            public boolean containsKey(Object key) {
+                return false;
+            }
+
+            @Override
+            public boolean containsValue(Object value) {
+                return false;
+            }
+
+            @Override
+            public Object get(Object key) {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public Object put(String key, Object value) {
+                return null;
+            }
+
+            @Override
+            public Object remove(Object key) {
+                return null;
+            }
+
+            @Override
+            public void putAll(@NotNull Map<? extends String, ?> m) {
+
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @NotNull
+            @Override
+            public Set<String> keySet() {
+                return null;
+            }
+
+            @NotNull
+            @Override
+            public Collection<Object> values() {
+                return null;
+            }
+
+            @NotNull
+            @Override
+            public Set<Entry<String, Object>> entrySet() {
+                return null;
+            }
+
+            public String getSingle(String header) {
+                return rawHeaders.get(header).get(0);
+            }
         }
     }
 }
