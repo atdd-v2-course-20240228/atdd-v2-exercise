@@ -19,8 +19,8 @@
 
   场景: 订单详情 - 无物流
     假如存在如下订单:
-      | code  | productName | total | recipientName | recipientMobile | recipientAddress | status     |
-      | SN001 | 电脑          | 19999 | 张三            | 13085901735     | 上海市长宁区           | delivering |
+      | code  | productName | total | recipientName | recipientMobile | recipientAddress | status        |
+      | SN001 | 电脑          | 19999 | 张三            | 13085901735     | 上海市长宁区           | toBeDelivered |
     当API查询订单"SN001"详情时
     那么返回如下订单
     """
@@ -31,7 +31,7 @@
         "recipientName": "张三",
         "recipientMobile": "13085901735",
         "recipientAddress": "上海市长宁区",
-        "status": "delivering"
+        "status": "toBeDelivered"
       }
     """
 
@@ -44,8 +44,8 @@
 
   场景: 订单详情 - 查询物流
     假如存在如下订单:
-      | code  | productName | total | recipientName | recipientMobile | recipientAddress | status     | deliverNo     |
-      | SN001 | 电脑          | 19999 | 张三            | 13085901735     | 上海市长宁区           | delivering | 4313751158896 |
+      | code  | productName | total | recipientName | recipientMobile | recipientAddress | status     | deliverNo     | deliveredAt          |
+      | SN001 | 电脑          | 19999 | 张三            | 13085901735     | 上海市长宁区           | delivering | 4313751158896 | 2022-02-26T16:25:01Z |
     并且存在快递单"4313751158896"的物流信息如下
     """
     {
@@ -86,6 +86,7 @@
         "recipientMobile": "13085901735",
         "recipientAddress": "上海市长宁区",
         "status": "delivering",
+        "deliveredAt": "2022-02-26 16:25:01"
         "logistics": {
             "deliverNo": "4313751158896",
             "companyCode": "yunda",
