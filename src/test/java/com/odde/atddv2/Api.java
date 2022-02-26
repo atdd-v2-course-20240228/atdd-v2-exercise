@@ -1,6 +1,7 @@
 package com.odde.atddv2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.leeonky.cucumber.restful.RestfulStep;
 import com.odde.atddv2.entity.User;
 import com.odde.atddv2.repo.UserRepo;
 import io.cucumber.java.Before;
@@ -21,6 +22,9 @@ public class Api {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private RestfulStep restfulStep;
+
     @SneakyThrows
     @Before("@api-login")
     public void apiLogin() {
@@ -30,6 +34,7 @@ public class Api {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), objectMapper.writeValueAsString(defaultUser));
         Request request = new Request.Builder().url("http://localhost:10081/users/login").post(requestBody).build();
         token = okHttpClient.newCall(request).execute().header("token");
+        restfulStep.header("token", token);
     }
 
     @SneakyThrows

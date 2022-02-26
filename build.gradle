@@ -64,6 +64,7 @@ task cucumber(type: JavaExec) {
     args = ['--plugin', 'pretty',
             '--glue', 'com.odde.atddv2',
             '--glue', 'com.github.leeonky.jfactory.cucumber',
+            '--glue', 'com.github.leeonky.cucumber.restful',
             'src/test/resources']
 }
 
