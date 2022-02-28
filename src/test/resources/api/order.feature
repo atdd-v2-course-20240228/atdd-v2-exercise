@@ -86,7 +86,7 @@
         "recipientMobile": "13085901735",
         "recipientAddress": "上海市长宁区",
         "status": "delivering",
-        "deliveredAt": "2022-02-26 16:25:01"
+        "deliveredAt": "2022-02-26 16:25:01",
         "logistics": {
             "deliverNo": "4313751158896",
             "companyCode": "yunda",
