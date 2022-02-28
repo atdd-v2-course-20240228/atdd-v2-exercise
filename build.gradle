@@ -55,6 +55,8 @@ dependencies {
     testImplementation "com.github.leeonky:jfactory-repo-jpa"
     testImplementation "com.github.leeonky:assertj-DAL"
     testImplementation "com.github.leeonky:DAL-java"
+    testImplementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.4'
+
 }
 
 task cucumber(type: JavaExec) {
