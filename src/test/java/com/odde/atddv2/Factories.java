@@ -1,6 +1,7 @@
 package com.odde.atddv2;
 
 import lombok.SneakyThrows;
+import okhttp3.OkHttpClient;
 import org.mockserver.client.MockServerClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,5 +21,10 @@ public class Factories {
             public void close() {
             }
         };
+    }
+
+    @Bean
+    public OkHttpClient okHttpClient() {
+        return new OkHttpClient();
     }
 }
