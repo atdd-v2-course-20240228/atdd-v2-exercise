@@ -52,6 +52,7 @@ dependencies {
     testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
     testImplementation group: 'org.mock-server', name: 'mockserver-client-java', version: '5.4.1'
     testImplementation "com.github.leeonky:jfactory-cucumber"
+    testImplementation "com.github.leeonky:jfactory"
     testImplementation "com.github.leeonky:jfactory-repo-jpa"
     testImplementation "com.github.leeonky:assertj-DAL"
     testImplementation "com.github.leeonky:DAL-java"
