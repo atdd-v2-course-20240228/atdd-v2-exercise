@@ -1,6 +1,5 @@
 package com.odde.atddv2;
 
-import com.github.leeonky.cucumber.restful.RestfulStep;
 import com.odde.atddv2.repo.OrderRepo;
 import com.odde.atddv2.repo.UserRepo;
 import io.cucumber.java.Before;
@@ -8,8 +7,6 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.test.context.ContextConfiguration;
-
-import javax.annotation.PostConstruct;
 
 @ContextConfiguration(classes = {CucumberConfiguration.class}, loader = SpringBootContextLoader.class)
 @CucumberContextConfiguration
@@ -21,17 +18,10 @@ public class ApplicationSteps {
     @Autowired
     private OrderRepo orderRepo;
 
-    @Autowired
-    private RestfulStep restfulStep;
-
     @Before(order = 1)
     public void clearDB() {
         userRepo.deleteAll();
         orderRepo.deleteAll();
     }
 
-    @PostConstruct
-    public void setBaseUrl() {
-        restfulStep.setBaseUrl("http://localhost:10081/api");
-    }
 }

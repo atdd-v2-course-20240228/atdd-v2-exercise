@@ -11,6 +11,8 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
+
 public class ApiOrderSteps {
 
     @Autowired
@@ -21,8 +23,14 @@ public class ApiOrderSteps {
 
     @Autowired
     private UserRepo userRepo;
+
     @Autowired
     private RestfulStep restfulStep;
+
+    @PostConstruct
+    public void setBaseUrl() {
+        restfulStep.setBaseUrl("http://localhost:10081/api");
+    }
 
     @SneakyThrows
     @Before("@api-login")
