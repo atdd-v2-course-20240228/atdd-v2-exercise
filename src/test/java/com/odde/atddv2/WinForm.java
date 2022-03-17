@@ -1,11 +1,10 @@
 package com.odde.atddv2;
 
-import io.appium.java_client.windows.WindowsDriver;
-import io.appium.java_client.windows.WindowsElement;
 import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.winium.DesktopOptions;
+import org.openqa.selenium.winium.WiniumDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +18,7 @@ import static org.openqa.selenium.By.xpath;
 @Component
 public class WinForm {
 
-    private WindowsDriver<WindowsElement> windowsDriver = null;
+    private WiniumDriver windowsDriver = null;
     private String currentWindow;
     @Value("${app.path:C:\\ClientServerProject\\软件系统客户端模版\\bin\\Debug\\软件系统客户端模版.exe}")
     private String appPath;
@@ -44,10 +43,12 @@ public class WinForm {
     }
 
     @SneakyThrows
-    public WindowsDriver<WindowsElement> createWinDriver() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("app", appPath);
-        return new WindowsDriver<>(new URL("http://127.0.0.1:4723"), capabilities);
+    public WiniumDriver createWinDriver() {
+        DesktopOptions options = new DesktopOptions();
+        options.setApplicationPath(appPath);
+        options.setDebugConnectToRunningApp(false);
+        options.setLaunchDelay(2);
+        return new WiniumDriver(new URL("http://127.0.0.1:9999"), options);
     }
 
     public WebDriver getWindowsDriver() {

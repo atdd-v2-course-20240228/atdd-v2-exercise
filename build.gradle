@@ -52,8 +52,10 @@ dependencies {
     testImplementation("io.cucumber:cucumber-java:6.10.2")
     testImplementation("io.cucumber:cucumber-spring:6.10.2")
     testImplementation("org.assertj:assertj-core:3.19.0")
-    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
-    testImplementation group: 'io.appium', name: 'java-client', version: '7.6.0'
+//    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+//    testImplementation group: 'io.appium', name: 'java-client', version: '7.6.0'
+    testImplementation group: 'com.github.2gis.winium', name: 'winium-webdriver', version: '0.1.0-1'
+    testImplementation group: 'com.github.2gis.winium', name: 'winium-elements-desktop', version: '0.2.0-1'
     testImplementation "org.awaitility:awaitility:4.0.3"
     testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
     testImplementation group: 'org.mock-server', name: 'mockserver-client-java', version: '5.4.1'
