@@ -1,6 +1,5 @@
 package com.odde.atddv2;
 
-import io.cucumber.java.After;
 import io.cucumber.java.zh_cn.当;
 import io.cucumber.java.zh_cn.那么;
 import lombok.SneakyThrows;
@@ -40,13 +39,13 @@ public class WinSteps {
         assertThat(getWinDriver().findElementById("CalculatorResults").getText()).isEqualTo("Display is " + result);
     }
 
-    @After
-    public void close() {
-        if (winDriver != null) {
-            winDriver.quit();
-            winDriver = null;
-        }
-    }
+//    @After
+//    public void close() {
+//        if (winDriver != null) {
+//            winDriver.quit();
+//            winDriver = null;
+//        }
+//    }
 
     @SneakyThrows
     private WiniumDriver createWinDriver() {

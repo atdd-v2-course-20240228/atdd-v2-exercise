@@ -1,6 +1,7 @@
 package com.odde.atddv2;
 
 import lombok.SneakyThrows;
+import org.awaitility.Awaitility;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.winium.DesktopOptions;
@@ -11,12 +12,17 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.Objects;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.openqa.selenium.By.xpath;
 
 @Component
 public class WinForm {
+
+    static {
+        Awaitility.setDefaultTimeout(30, SECONDS);
+    }
 
     private WiniumDriver windowsDriver = null;
     private String currentWindow;
@@ -66,7 +72,7 @@ public class WinForm {
     }
 
     private String getCurrentWindow() {
-        return windowsDriver.getWindowHandles().iterator().next();
+        return windowsDriver.getWindowHandle();
     }
 
     private WebElement waitElement(String xpathExpression) {
