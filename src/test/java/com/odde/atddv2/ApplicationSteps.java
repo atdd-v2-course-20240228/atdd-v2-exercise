@@ -1,7 +1,6 @@
 package com.odde.atddv2;
 
 import Demo.ClockPrx;
-import Demo.LoginRequest;
 import Demo.LoginResponse;
 import Demo.TimeOfDay;
 import com.github.leeonky.jfactory.JFactory;
@@ -31,8 +30,7 @@ import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.test.context.ContextConfiguration;
 
 import static com.github.leeonky.dal.extension.assertj.DALAssert.expect;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -121,7 +119,8 @@ public class ApplicationSteps {
     @假如("存在用户名为{string}和密码为{string}的用户")
     public void 存在用户名为和密码为的用户(String userName, String password) {
 //        userRepo.save(new User().setUserName(userName).setPassword(password));
-        when(loginService.login(any(LoginRequest.class), any(Current.class))).thenReturn(new LoginResponse(200));
+        when(loginService.login(argThat(argument -> argument.userName.equals(userName) && argument.password.equals(password)), any(Current.class)))
+                .thenReturn(new LoginResponse(200));
     }
 
     @当("以用户名为{string}和密码为{string}登录时")
