@@ -17,4 +17,20 @@ module Demo
         TimeOfDay getTime();
         void setTime(TimeOfDay time);
     }
+
+    struct LoginResponse
+    {
+        int code;
+    }
+
+    struct LoginRequest
+    {
+        string userName;
+        string password;
+    }
+
+    interface LoginService
+    {
+        LoginResponse login(LoginRequest request);
+    }
 }
