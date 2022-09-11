@@ -40,7 +40,7 @@ public class ApiOrderSteps {
         ObjectMapper objectMapper = new ObjectMapper();
         restfulStep.setBaseUrl("http://localhost:10081");
         restfulStep.post("/users/login", DocString.create(objectMapper.writeValueAsString(defaultUser)));
-        String token = restfulStep.response().headers().getSingle("token");
+        String token = restfulStep.responseShouldBe("headers.Token");
         restfulStep.header("token", token);
         restfulStep.setBaseUrl("http://localhost:10081/api");
     }
