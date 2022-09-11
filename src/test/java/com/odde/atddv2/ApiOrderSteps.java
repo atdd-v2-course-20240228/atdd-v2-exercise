@@ -72,5 +72,4 @@ public class ApiOrderSteps {
                 .withQueryStringParameter("type", "auto")
                 .withQueryStringParameter("number", deliverNo), json);
     }
-
 }

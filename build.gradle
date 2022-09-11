@@ -32,7 +32,7 @@ configurations {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:2020.0.2"
-        mavenBom "com.github.leeonky:java-TD-tools-dependencies:0.0.2"
+        mavenBom "com.github.leeonky:java-TD-tools-dependencies:0.0.8"
     }
 }
 
@@ -52,10 +52,12 @@ dependencies {
     testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
     testImplementation group: 'org.mock-server', name: 'mockserver-client-java', version: '5.4.1'
     testImplementation "com.github.leeonky:jfactory"
+    testImplementation 'com.github.leeonky:DAL-java'
     testImplementation "com.github.leeonky:jfactory-cucumber"
     testImplementation "com.github.leeonky:jfactory-repo-jpa"
-    testImplementation "com.github.leeonky:assertj-DAL"
-    testImplementation "com.github.leeonky:DAL-java"
+    testImplementation "com.github.leeonky:RESTful-cucumber"
+    testImplementation 'com.github.leeonky:DAL-extension-basic'
+    testImplementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.4'
 }
 
 task cucumber(type: JavaExec) {
