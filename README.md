@@ -12,6 +12,10 @@
 gradlew.bat cucumber
 ```
 
+```Chinese scenario support
+-Dfile.encoding=utf-8 -Dsun.jnu.encoding=utf-8
+```
+
 You may encounter character encoding issue in terminal. If so, please try to fix it by following this
 link https://akr.am/blog/posts/using-utf-8-in-the-windows-terminal
 
