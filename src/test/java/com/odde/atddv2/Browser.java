@@ -39,7 +39,7 @@ public class Browser {
     }
 
     public void shouldHaveText(String text) {
-        await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + text + "']"))).isNotEmpty());
+        await().ignoreExceptions().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + text + "']"))).isNotEmpty());
     }
 
     public void selectTextByPlaceholder(String placeholder, String text) {
@@ -48,7 +48,7 @@ public class Browser {
     }
 
     public void shouldNotHaveText(String text) {
-        await().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + text + "']"))).isEmpty());
+        await().ignoreExceptions().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + text + "']"))).isEmpty());
     }
 
     @PreDestroy
@@ -65,6 +65,6 @@ public class Browser {
     }
 
     private WebElement waitElement(String xpathExpression) {
-        return await().until(() -> getWebDriver().findElement(xpath(xpathExpression)), Objects::nonNull);
+        return await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath(xpathExpression)), Objects::nonNull);
     }
 }
