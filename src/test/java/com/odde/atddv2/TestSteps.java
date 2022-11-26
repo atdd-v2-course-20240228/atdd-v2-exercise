@@ -52,9 +52,9 @@ public class TestSteps {
 
     @当("以用户名为{string}和密码为{string}登录时")
     public void 以用户名为和密码为登录时(String userName, String password) {
-        await().until(() -> getWinDriver().findElement(xpath("//*[@AutomationId='textBox_userName']")), Objects::nonNull).sendKeys(userName);
-        await().until(() -> getWinDriver().findElement(xpath("//*[@AutomationId='textBox_password']")), Objects::nonNull).sendKeys(password);
-        await().until(() -> getWinDriver().findElement(xpath("//*[@AutomationId='userButton_login']")), Objects::nonNull).click();
+        await().ignoreExceptions().until(() -> getWinDriver().findElement(xpath("//*[@AutomationId='textBox_userName']")), Objects::nonNull).sendKeys(userName);
+        await().ignoreExceptions().until(() -> getWinDriver().findElement(xpath("//*[@AutomationId='textBox_password']")), Objects::nonNull).sendKeys(password);
+        await().ignoreExceptions().until(() -> getWinDriver().findElement(xpath("//*[@AutomationId='userButton_login']")), Objects::nonNull).click();
     }
 
     @SneakyThrows
@@ -62,12 +62,12 @@ public class TestSteps {
     public void 登录成功(String userName) {
         TimeUnit.SECONDS.sleep(5);
         getWinDriver().switchTo().window(getWinDriver().getWindowHandles().iterator().next());
-        await().untilAsserted(() -> assertThat(getWinDriver().findElements(xpath("//*[@Name='" + ("Welcome " + userName) + "']"))).isNotEmpty());
+        await().ignoreExceptions().untilAsserted(() -> assertThat(getWinDriver().findElements(xpath("//*[@Name='" + ("Welcome " + userName) + "']"))).isNotEmpty());
     }
 
     @那么("登录失败的错误信息是{string}")
     public void 登录失败的错误信息是(String message) {
-        await().untilAsserted(() -> assertThat(getWinDriver().findElements(xpath("//*[@Name='" + message + "']"))).isNotEmpty());
+        await().ignoreExceptions().untilAsserted(() -> assertThat(getWinDriver().findElements(xpath("//*[@Name='" + message + "']"))).isNotEmpty());
     }
 
     @SneakyThrows
