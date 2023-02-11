@@ -33,7 +33,7 @@ public class WinForm {
     }
 
     public void shouldHaveText(String text) {
-        await().untilAsserted(() -> assertThat(getWindowsDriver().findElements(xpath("//*[@Name='" + text + "']"))).isNotEmpty());
+        await().ignoreExceptions().untilAsserted(() -> assertThat(getWindowsDriver().findElements(xpath("//*[@Name='" + text + "']"))).isNotEmpty());
     }
 
     public void close() {
@@ -59,7 +59,7 @@ public class WinForm {
 
     @SneakyThrows
     public void newPage() {
-        await().untilAsserted(() -> assertThat(currentWindow).isNotEqualTo(getCurrentWindow()));
+        await().ignoreExceptions().untilAsserted(() -> assertThat(currentWindow).isNotEqualTo(getCurrentWindow()));
         currentWindow = getCurrentWindow();
         windowsDriver.switchTo().window(currentWindow);
     }
@@ -69,6 +69,6 @@ public class WinForm {
     }
 
     private WebElement waitElement(String xpathExpression) {
-        return await().until(() -> getWindowsDriver().findElement(xpath(xpathExpression)), Objects::nonNull);
+        return await().ignoreExceptions().until(() -> getWindowsDriver().findElement(xpath(xpathExpression)), Objects::nonNull);
     }
 }
