@@ -50,7 +50,7 @@ dependencies {
     testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
     testImplementation "org.awaitility:awaitility:4.0.3"
     testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
-    testImplementation group: 'org.mock-server', name: 'mockserver-client-java', version: '5.4.1'
+    testImplementation group: 'org.mock-server', name: 'mockserver-client-java', version: '5.13.2'
     testImplementation "com.github.leeonky:jfactory"
     testImplementation 'com.github.leeonky:DAL-java'
     testImplementation "com.github.leeonky:jfactory-cucumber"
