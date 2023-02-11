@@ -56,7 +56,7 @@ dependencies {
     testImplementation group: 'io.appium', name: 'java-client', version: '7.6.0'
     testImplementation "org.awaitility:awaitility:4.0.3"
     testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
-    testImplementation group: 'org.mock-server', name: 'mockserver-client-java', version: '5.4.1'
+    testImplementation group: 'org.mock-server', name: 'mockserver-client-java', version: '5.13.2'
     testImplementation "com.github.leeonky:JSONassert-extend-comparator:${jsonAssertExtendComparator}"
     testImplementation "com.github.leeonky:jfactory:${jfactory}"
     testImplementation "com.github.leeonky:jfactory-cucumber:${jfactoryCucumber}"
