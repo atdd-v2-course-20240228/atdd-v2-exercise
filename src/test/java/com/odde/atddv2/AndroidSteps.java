@@ -19,8 +19,8 @@ public class AndroidSteps {
         caps.setCapability("udid", "emulator-5558");
         caps.setCapability("platformVersion", "11.0");
         caps.setCapability("platformName", "Android");
-//        caps.setCapability("app", "/root/tmp/app/app.apk");
-        caps.setCapability("app", "/home/androiduser/app-debug.apk");
+        caps.setCapability("app", "/tmp/app.apk");
+//        caps.setCapability("app", "/home/androiduser/app-debug.apk");
         caps.setCapability("remoteAdbHost", "anbox-mac");
         driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), caps);
         driver.launchApp();
