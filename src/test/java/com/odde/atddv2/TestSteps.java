@@ -8,10 +8,8 @@ import io.cucumber.java.zh_cn.那么;
 import lombok.SneakyThrows;
 import okhttp3.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -20,11 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.By.xpath;
 
 public class TestSteps {
-    private WebDriver webDriver = null;
+
+    private RemoteWebDriver webDriver = null;
     private Response response;
 
     @SneakyThrows
-    public WebDriver createWebDriver() {
+    public RemoteWebDriver createWebDriver() {
         return new RemoteWebDriver(new URL("http://web-driver.tool.net:4444"), DesiredCapabilities.chrome());
     }
 
@@ -73,10 +72,9 @@ public class TestSteps {
         getWebDriver().findElement(By.xpath("//*[@id='su']")).click();
     }
 
-    @Autowired
-    private Browser browser;
-
-    private WebDriver getWebDriver() {
-        return browser.getWebDriver();
+    public RemoteWebDriver getWebDriver() {
+        if (webDriver == null)
+            webDriver = createWebDriver();
+        return webDriver;
     }
 }
