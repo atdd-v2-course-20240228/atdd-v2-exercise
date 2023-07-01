@@ -13,7 +13,7 @@ public class LoginSteps {
     private HomePage homePage;
 
     @Autowired
-    private Browser browser;
+    private App app;
 
     @Autowired
     private UserRepo userRepo;
@@ -31,11 +31,11 @@ public class LoginSteps {
 
     @那么("{string}登录成功")
     public void 登录成功(String userName) {
-        browser.shouldHaveText("Welcome " + userName);
+        app.shouldHaveText("Welcome " + userName);
     }
 
     @那么("登录失败的错误信息是{string}")
     public void 登录失败的错误信息是(String message) {
-        browser.shouldHaveText(message);
+        app.shouldHaveText(message);
     }
 }

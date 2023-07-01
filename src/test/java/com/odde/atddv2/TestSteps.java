@@ -7,18 +7,24 @@ import io.cucumber.java.zh_cn.那么;
 import lombok.SneakyThrows;
 import okhttp3.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.By.xpath;
 
 public class TestSteps {
+
+    private RemoteWebDriver webDriver = null;
     private Response response;
-    @Autowired
-    private Browser browser;
+
+    @SneakyThrows
+    public RemoteWebDriver createWebDriver() {
+        return new RemoteWebDriver(new URL("http://web-driver.tool.net:4444"), DesiredCapabilities.chrome());
+    }
 
     @当("测试环境")
     public void 测试环境() {
@@ -57,7 +63,9 @@ public class TestSteps {
         getWebDriver().findElement(By.xpath("//*[@id='su']")).click();
     }
 
-    private WebDriver getWebDriver() {
-        return browser.getWebDriver();
+    public RemoteWebDriver getWebDriver() {
+        if (webDriver == null)
+            webDriver = createWebDriver();
+        return webDriver;
     }
 }
