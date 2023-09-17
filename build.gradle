@@ -41,6 +41,7 @@ dependencies {
     testImplementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     testImplementation('org.projectlombok:lombok:1.18.18')
     testImplementation("com.squareup.okhttp3:okhttp:4.9.0")
+    testImplementation('org.springframework.boot:spring-boot-starter-web')
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation("mysql:mysql-connector-java:8.0.13")
@@ -58,6 +59,8 @@ dependencies {
     testImplementation "com.github.leeonky:RESTful-cucumber"
     testImplementation 'com.github.leeonky:DAL-extension-basic'
     testImplementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.4'
+    testImplementation 'org.apache.poi:poi:5.2.2'
+    testImplementation 'org.apache.poi:poi-ooxml:5.2.2'
 }
 
 task cucumber(type: JavaExec) {
