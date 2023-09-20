@@ -19,4 +19,7 @@ public class Student {
 
     @ManyToOne
     private Clazz clazz;
+
+    @ManyToOne
+    private School school;
 }
