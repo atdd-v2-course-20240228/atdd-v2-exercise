@@ -1,5 +1,6 @@
 package com.github.leeonky.dal.extensions;
 
+import com.github.leeonky.cucumber.restful.RestfulStep;
 import com.github.leeonky.dal.DAL;
 import com.github.leeonky.dal.runtime.Extension;
 import com.github.leeonky.dal.runtime.JavaClassPropertyAccessor;
@@ -20,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.github.leeonky.dal.Assertions.expect;
 import static com.github.leeonky.dal.extensions.BinaryExtension.readAll;
 import static com.github.leeonky.dal.extensions.POIExcel.StaticMethods.excel;
 import static java.util.Optional.ofNullable;
@@ -105,6 +107,10 @@ public class POIExcel implements Extension {
         @SneakyThrows
         public static XSSFWorkbook excel(byte[] data) {
             return new XSSFWorkbook(new ByteArrayInputStream(data));
+        }
+
+        public static Object 成绩单(RestfulStep.Response response) {
+            return expect(response).get("body.unzip[0].excel[1]");
         }
     }
 }
