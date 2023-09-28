@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AndroidSteps {
 
-    @Value("${appium.udid:emulator-5558}")
+    @Value("${appium.udid:emulator-5554}")
     private String udid;
     private AndroidDriver<AndroidElement> driver;
 
