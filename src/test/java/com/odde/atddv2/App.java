@@ -17,7 +17,7 @@ import static org.awaitility.Awaitility.await;
 @Component
 public class App {
 
-    @Value("${appium.udid:emulator-5558}")
+    @Value("${appium.udid:emulator-5554}")
     private String udid;
     private AndroidDriver<AndroidElement> driver;
 
