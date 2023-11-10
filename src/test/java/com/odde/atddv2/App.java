@@ -7,7 +7,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PreDestroy;
 import java.net.URL;
 import java.util.Objects;
 
@@ -63,12 +62,11 @@ public class App {
     }
 
     public void closeApp() {
-        getAndroidDriver().closeApp();
-    }
-
-    @PreDestroy
-    public void quit() {
-        getAndroidDriver().quit();
+        if (driver != null) {
+            driver.closeApp();
+            driver.quit();
+            driver = null;
+        }
     }
 
 }
