@@ -31,7 +31,7 @@ public class LoginSteps {
 
     @那么("{string}登录成功")
     public void 登录成功(String userName) {
-        app.shouldHaveText("Welcome: " + userName);
+        app.shouldHaveText("Welcome " + userName);
     }
 
     @那么("登录失败的错误信息是{string}")
