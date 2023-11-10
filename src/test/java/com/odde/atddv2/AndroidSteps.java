@@ -71,7 +71,7 @@ public class AndroidSteps {
 
     @那么("{string}登录成功")
     public void 登录成功(String userName) {
-        await().ignoreExceptions().untilAsserted(() -> assertThat(getAndroidDriver().findElementsByAndroidUIAutomator("new UiSelector().text(\"Welcome: " + userName + "\")")).isNotEmpty());
+        await().ignoreExceptions().untilAsserted(() -> assertThat(getAndroidDriver().findElementsByAndroidUIAutomator("new UiSelector().text(\"Welcome " + userName + "\")")).isNotEmpty());
     }
 
     @那么("登录失败的错误信息是{string}")
