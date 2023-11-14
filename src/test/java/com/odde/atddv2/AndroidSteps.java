@@ -41,7 +41,6 @@ public class AndroidSteps {
         DesiredCapabilities caps = DesiredCapabilities.android();
         caps.setCapability("automationName", "UiAutomator2");
         caps.setCapability("udid", udid);
-        caps.setCapability("platformVersion", "11.0");
         caps.setCapability("platformName", "Android");
         caps.setCapability("app", "/tmp/app.apk");
         return new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), caps);
