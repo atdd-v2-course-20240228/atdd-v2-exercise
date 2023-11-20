@@ -59,6 +59,7 @@ public class AndroidSteps {
         caps.setCapability("udid", udid);
         caps.setCapability("platformName", "Android");
         caps.setCapability("app", "/tmp/app.apk");
+        caps.setCapability("uiautomator2ServerInstallTimeout", 120000);
         return new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), caps);
     }
 
