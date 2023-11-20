@@ -34,6 +34,7 @@ public class App {
         caps.setCapability("platformVersion", "11.0");
         caps.setCapability("platformName", "Android");
         caps.setCapability("app", "/tmp/app.apk");
+        caps.setCapability("uiautomator2ServerInstallTimeout", 120000);
         return new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), caps);
     }
 
