@@ -12,10 +12,6 @@
 gradlew.bat cucumber
 ```
 
-```Chinese scenario support
--Dfile.encoding=utf-8 -Dsun.jnu.encoding=utf-8
-```
-
 You may encounter character encoding issue in terminal. If so, please try to fix it by following this
 link https://akr.am/blog/posts/using-utf-8-in-the-windows-terminal
 
@@ -26,9 +22,3 @@ link https://akr.am/blog/posts/using-utf-8-in-the-windows-terminal
 * Open the repo root folder with Intellij and wait for this gradle project loaded completely
 * Open the feature file at `src/test/resources/homework.feature` and run it by clicking the green run test gutter
   icon on the left bar and test should pass
-
-# Additional Setup for Windows UI Automation
-
-* Install the WinAppDriver at https://github.com/microsoft/WinAppDriver/releases/tag/v1.2.1
-    * The default installation location is "C:\Program Files (x86)\Windows Application Driver"
-* After installation, run `WinAppDriver.exe` in cmd as the automation server
