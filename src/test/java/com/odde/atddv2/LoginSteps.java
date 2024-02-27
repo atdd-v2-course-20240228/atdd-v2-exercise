@@ -3,6 +3,8 @@ package com.odde.atddv2;
 import com.odde.atddv2.entity.User;
 import com.odde.atddv2.page.HomePage;
 import com.odde.atddv2.repo.UserRepo;
+import io.cucumber.java.Before;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.zh_cn.假如;
 import io.cucumber.java.zh_cn.当;
 import io.cucumber.java.zh_cn.那么;
@@ -37,5 +39,10 @@ public class LoginSteps {
     @那么("登录失败的错误信息是{string}")
     public void 登录失败的错误信息是(String message) {
         browser.shouldHaveText(message);
+    }
+
+    @Before("@ui-login")
+    public void uiLogin() {
+        throw new PendingException();
     }
 }
