@@ -42,6 +42,7 @@ public class Relations {
         public void main() {
             property("id").ignore();
             property("clazz").is(班级.class);
+            property("school").is(学校.class);
             property("school").dependsOn("clazz", clazz -> ((Clazz) clazz).getSchool());
         }
     }
